@@ -1,11 +1,12 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static jdk.nashorn.internal.objects.Global.Infinity;
+
 public class CalcService {
 
-
 //    private double calculateResult(String expression) {
-    public double calculateResult(String expression) {
+    public double calculateSimpleExpression(String expression) {
 
         double result = 0;
         String regex = "[\\+\\-\\*\\/]";
@@ -62,11 +63,17 @@ public class CalcService {
             }
 
         }
+
+        if (result == Infinity || result == -Infinity) {
+            throw new IllegalArgumentException("В результате вычислений получилась Бесконечность");
+        }
+
         return result;
     }
 
 
-    private double calcExpressionWithoutParenthesis(String expression) {
+    //private double calcExpressionWithoutParenthesis(String expression) {
+    public double calcExpressionWithoutParenthesis(String expression) {
 
         double result = 0;
         String regex;
@@ -100,7 +107,7 @@ public class CalcService {
                         start = 0;
                     }
 
-                    result = calculateResult(expression.substring(start, end));
+                    result = calculateSimpleExpression(expression.substring(start, end));
 
                     expression = expression.substring(0, start) + Double.valueOf(result) + expression.substring(end);
 
@@ -117,7 +124,6 @@ public class CalcService {
 
         double result;
 
-        // тут цикл пока не останется скобок
         expression = removeParenthesis(expression);
 
         try {
@@ -147,5 +153,8 @@ public class CalcService {
         }
         return expression;
     }
+
+
+
 
 }
