@@ -154,7 +154,19 @@ public class CalcService {
         return expression;
     }
 
+    public boolean checkExpression(String expression) {
 
+        String regex = "([\\d+-/*() ])+";
+        Pattern pattern = Pattern.compile(regex);
 
+        Matcher match = pattern.matcher(expression);
+
+        if (match.matches()) {
+            return true;
+        } else {
+            throw new IllegalArgumentException("Недопустимые символы в вычисляемом выражении");
+        }
+
+    }
 
 }

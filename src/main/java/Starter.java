@@ -6,6 +6,8 @@ public class Starter {
 
         String expression = "12-5*((1.5+5) + 8*40)-4*20,5";
 
+        boolean expressionIsCorrect = calcService.checkExpression(expression);
+
         expression = expression.replaceAll("\\s", "");
         expression = expression.replaceAll(",", ".");
 

@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -9,14 +12,13 @@ public class PositiveTests {
     public final double precision = 0.000001;
 
 
-    @Test
-    void testSimpleExpressionAddition() {
+    @ParameterizedTest
+    @CsvSource({"1+3,4", "-1+3,2", "10.5+12.8,23.3"})
+    void testSimpleExpressionAddition(String expression, double result) {
 
         CalcService calcService = new CalcService();
+        assertEquals(result, calcService.calculateSimpleExpression(expression), expression+" = "+result);
 
-        assertEquals(4, calcService.calculateSimpleExpression("1+3"), "1+3 = 4");
-        assertEquals(2, calcService.calculateSimpleExpression("-1+3"), "-1+3 = 2");
-        assertEquals(23.3, calcService.calculateSimpleExpression("10.5+12.8"), "10.5+12.8 = 23.3");
 
     }
 
